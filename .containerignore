@@ -1,0 +1,6 @@
+.git
+.claude
+*.md
+LICENSE
+examples/
+claude-resume.sh

@@ -1,0 +1,19 @@
+[Unit]
+Description=GPU Stats Prometheus Exporter
+After=local-fs.target
+
+[Container]
+Image=localhost/gpu_stats4prometheus:latest
+PublishPort=9835:9835
+AddDevice=nvidia.com/gpu=all
+ReadOnly=true
+DropCapability=ALL
+SecurityLabelDisable=true
+NoNewPrivileges=true
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=30
+
+[Install]
+WantedBy=default.target

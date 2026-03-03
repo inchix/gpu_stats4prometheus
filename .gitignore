@@ -1,0 +1,4 @@
+gpu_stats4prometheus
+*.exe
+.claude/
+claude-resume.sh
