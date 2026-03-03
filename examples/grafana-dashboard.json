@@ -34,14 +34,269 @@
   },
   "panels": [
     {
+      "id": 100,
+      "title": "GPUs Detected",
+      "type": "stat",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "count(gpu_stats_gpu_info)",
+          "legendFormat": "GPUs"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 101,
+      "title": "Avg GPU Temp",
+      "type": "stat",
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 4,
+        "y": 0
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(gpu_stats_temperature_celsius{gpu_uuid=~\"$gpu\", sensor=\"gpu\"})",
+          "legendFormat": "Avg"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 65
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 102,
+      "title": "Avg GPU Utilization",
+      "type": "stat",
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 9,
+        "y": 0
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "avg(gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=\"gpu\"})",
+          "legendFormat": "Avg"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.7
+              },
+              {
+                "color": "red",
+                "value": 0.9
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 103,
+      "title": "Total Power Draw",
+      "type": "stat",
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 14,
+        "y": 0
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(gpu_stats_power_draw_watts{gpu_uuid=~\"$gpu\"})",
+          "legendFormat": "Total"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "watt",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 600
+              },
+              {
+                "color": "red",
+                "value": 800
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value"
+      }
+    },
+    {
+      "id": 104,
+      "title": "Total Memory Used",
+      "type": "stat",
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 19,
+        "y": 0
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "sum(gpu_stats_memory_used_bytes{gpu_uuid=~\"$gpu\"})",
+          "legendFormat": "Used"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 51539607552
+              },
+              {
+                "color": "red",
+                "value": 60129542144
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "area",
+        "textMode": "value"
+      }
+    },
+    {
       "id": 1,
       "title": "GPU Info",
       "type": "table",
       "gridPos": {
-        "h": 5,
+        "h": 4,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 4
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -83,14 +338,76 @@
       }
     },
     {
-      "id": 2,
+      "id": 10,
       "title": "GPU Temperature",
-      "type": "timeseries",
+      "type": "gauge",
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 7,
+        "w": 8,
         "x": 0,
-        "y": 5
+        "y": 8
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_temperature_celsius{gpu_uuid=~\"$gpu\", sensor=\"gpu\"}",
+          "legendFormat": "{{gpu_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "super-light-blue",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 30
+              },
+              {
+                "color": "yellow",
+                "value": 65
+              },
+              {
+                "color": "orange",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "orientation": "auto"
+      }
+    },
+    {
+      "id": 11,
+      "title": "Temperature Heatmap (All GPUs)",
+      "type": "status-history",
+      "gridPos": {
+        "h": 7,
+        "w": 16,
+        "x": 8,
+        "y": 8
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -105,46 +422,115 @@
         "defaults": {
           "unit": "celsius",
           "color": {
-            "mode": "palette-classic"
+            "mode": "continuous-YlRd"
           },
           "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 10,
-            "thresholdsStyle": {
-              "mode": "line"
-            }
+            "fillOpacity": 100,
+            "lineWidth": 0
           },
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "blue",
                 "value": null
               },
               {
+                "color": "green",
+                "value": 30
+              },
+              {
                 "color": "yellow",
-                "value": 70
+                "value": 60
+              },
+              {
+                "color": "orange",
+                "value": 75
               },
               {
                 "color": "red",
                 "value": 85
               }
             ]
-          },
-          "min": 0,
-          "max": 100
+          }
         }
+      },
+      "options": {
+        "showValue": "auto",
+        "rowHeight": 0.9,
+        "colWidth": 0.9
       }
     },
     {
-      "id": 3,
+      "id": 12,
       "title": "Memory Temperature",
-      "type": "timeseries",
+      "type": "gauge",
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 5
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 15
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_temperature_celsius{gpu_uuid=~\"$gpu\", sensor=\"memory\"}",
+          "legendFormat": "{{gpu_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "super-light-blue",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 30
+              },
+              {
+                "color": "yellow",
+                "value": 65
+              },
+              {
+                "color": "orange",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 13,
+      "title": "Memory Temperature Heatmap (All GPUs)",
+      "type": "status-history",
+      "gridPos": {
+        "h": 7,
+        "w": 16,
+        "x": 8,
+        "y": 15
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -159,26 +545,54 @@
         "defaults": {
           "unit": "celsius",
           "color": {
-            "mode": "palette-classic"
+            "mode": "continuous-YlRd"
           },
           "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 10
+            "fillOpacity": 100,
+            "lineWidth": 0
           },
-          "min": 0,
-          "max": 100
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 30
+              },
+              {
+                "color": "yellow",
+                "value": 60
+              },
+              {
+                "color": "orange",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
         }
+      },
+      "options": {
+        "showValue": "auto",
+        "rowHeight": 0.9,
+        "colWidth": 0.9
       }
     },
     {
-      "id": 4,
+      "id": 20,
       "title": "GPU Utilization",
-      "type": "timeseries",
+      "type": "gauge",
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 7,
+        "w": 8,
         "x": 0,
-        "y": 13
+        "y": 22
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -186,136 +600,108 @@
       "targets": [
         {
           "expr": "gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=\"gpu\"}",
-          "legendFormat": "{{gpu_name}} ({{gpu_uuid}})"
+          "legendFormat": "{{gpu_name}}"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "percentunit",
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 20
-          },
           "min": 0,
-          "max": 1
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.7
+              },
+              {
+                "color": "orange",
+                "value": 0.85
+              },
+              {
+                "color": "red",
+                "value": 0.95
+              }
+            ]
+          }
         }
-      }
-    },
-    {
-      "id": 5,
-      "title": "Memory Utilization",
-      "type": "timeseries",
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 13
       },
-      "datasource": {
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=\"memory\"}",
-          "legendFormat": "{{gpu_name}} ({{gpu_uuid}})"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percentunit",
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 20
-          },
-          "min": 0,
-          "max": 1
-        }
-      }
-    },
-    {
-      "id": 6,
-      "title": "Encoder / Decoder Utilization",
-      "type": "timeseries",
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 21
-      },
-      "datasource": {
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=~\"encoder|decoder\"}",
-          "legendFormat": "{{gpu_name}} {{type}} ({{gpu_uuid}})"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percentunit",
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 10
-          },
-          "min": 0,
-          "max": 1
-        }
-      }
-    },
-    {
-      "id": 7,
-      "title": "Memory Usage",
-      "type": "timeseries",
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 21
-      },
-      "datasource": {
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "targets": [
-        {
-          "expr": "gpu_stats_memory_used_bytes{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "Used: {{gpu_name}} ({{gpu_uuid}})"
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
         },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 21,
+      "title": "GPU Utilization Heatmap (All GPUs)",
+      "type": "status-history",
+      "gridPos": {
+        "h": 7,
+        "w": 16,
+        "x": 8,
+        "y": 22
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
         {
-          "expr": "gpu_stats_memory_total_bytes{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "Total: {{gpu_name}} ({{gpu_uuid}})"
+          "expr": "gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=\"gpu\"} * 100",
+          "legendFormat": "{{gpu_name}} ({{gpu_uuid}})"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "bytes",
+          "unit": "percent",
           "color": {
-            "mode": "palette-classic"
+            "mode": "continuous-GrYlRd"
           },
           "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 10
+            "fillOpacity": 100,
+            "lineWidth": 0
           },
-          "min": 0
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
         }
+      },
+      "options": {
+        "showValue": "auto",
+        "rowHeight": 0.9,
+        "colWidth": 0.9
       }
     },
     {
-      "id": 8,
-      "title": "Memory Used %",
+      "id": 22,
+      "title": "Memory Bandwidth Utilization",
       "type": "gauge",
       "gridPos": {
-        "h": 8,
-        "w": 24,
+        "h": 7,
+        "w": 8,
         "x": 0,
         "y": 29
       },
@@ -324,8 +710,149 @@
       },
       "targets": [
         {
-          "expr": "gpu_stats_memory_used_bytes{gpu_uuid=~\"$gpu\"} / gpu_stats_memory_total_bytes{gpu_uuid=~\"$gpu\"}",
+          "expr": "gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=\"memory\"}",
+          "legendFormat": "{{gpu_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.7
+              },
+              {
+                "color": "red",
+                "value": 0.9
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 23,
+      "title": "Memory Bandwidth Heatmap (All GPUs)",
+      "type": "status-history",
+      "gridPos": {
+        "h": 7,
+        "w": 16,
+        "x": 8,
+        "y": 29
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=\"memory\"} * 100",
           "legendFormat": "{{gpu_name}} ({{gpu_uuid}})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "fillOpacity": 100,
+            "lineWidth": 0
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "showValue": "auto",
+        "rowHeight": 0.9,
+        "colWidth": 0.9
+      }
+    },
+    {
+      "id": 24,
+      "title": "Encoder / Decoder Utilization",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_utilization_ratio{gpu_uuid=~\"$gpu\", type=~\"encoder|decoder\"}",
+          "legendFormat": "{{gpu_name}} {{type}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15
+          }
+        }
+      }
+    },
+    {
+      "id": 30,
+      "title": "Memory Used %",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 43
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_memory_used_bytes{gpu_uuid=~\"$gpu\"} / gpu_stats_memory_total_bytes{gpu_uuid=~\"$gpu\"}",
+          "legendFormat": "{{gpu_name}}"
         }
       ],
       "fieldConfig": {
@@ -359,19 +886,122 @@
           ]
         },
         "orientation": "horizontal",
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "valueMode": "text"
       }
     },
     {
-      "id": 9,
-      "title": "Power Draw",
+      "id": 31,
+      "title": "Memory Used (bytes)",
+      "type": "bargauge",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 43
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_memory_used_bytes{gpu_uuid=~\"$gpu\"}",
+          "legendFormat": "Used: {{gpu_name}}"
+        },
+        {
+          "expr": "gpu_stats_memory_free_bytes{gpu_uuid=~\"$gpu\"}",
+          "legendFormat": "Free: {{gpu_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "^Free:"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "semi-dark-green"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": false,
+        "valueMode": "text"
+      }
+    },
+    {
+      "id": 32,
+      "title": "Memory Usage Over Time",
       "type": "timeseries",
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 8,
+        "x": 16,
+        "y": 43
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_memory_used_bytes{gpu_uuid=~\"$gpu\"}",
+          "legendFormat": "{{gpu_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "stacking": {
+              "mode": "none"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 40,
+      "title": "Power Draw",
+      "type": "gauge",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
         "x": 0,
-        "y": 37
+        "y": 51
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -379,24 +1009,81 @@
       "targets": [
         {
           "expr": "gpu_stats_power_draw_watts{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "Draw: {{gpu_name}} ({{gpu_uuid}})"
-        },
-        {
-          "expr": "gpu_stats_power_limit_watts{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "Limit: {{gpu_name}} ({{gpu_uuid}})"
+          "legendFormat": "{{gpu_name}}"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "watt",
+          "min": 0,
+          "max": 300,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 200
+              },
+              {
+                "color": "orange",
+                "value": 250
+              },
+              {
+                "color": "red",
+                "value": 280
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      }
+    },
+    {
+      "id": 41,
+      "title": "Power Draw vs Limit",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 51
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_power_draw_watts{gpu_uuid=~\"$gpu\"}",
+          "legendFormat": "Draw: {{gpu_name}}"
+        },
+        {
+          "expr": "gpu_stats_power_limit_watts{gpu_uuid=~\"$gpu\"}",
+          "legendFormat": "Limit: {{gpu_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "watt",
+          "min": 0,
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
             "lineWidth": 2,
             "fillOpacity": 10
-          },
-          "min": 0
+          }
         },
         "overrides": [
           {
@@ -418,6 +1105,10 @@
               {
                 "id": "custom.fillOpacity",
                 "value": 0
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
               }
             ]
           }
@@ -425,14 +1116,14 @@
       }
     },
     {
-      "id": 10,
+      "id": 50,
       "title": "Clock Speeds",
       "type": "timeseries",
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
-        "y": 37
+        "x": 0,
+        "y": 59
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -440,32 +1131,32 @@
       "targets": [
         {
           "expr": "gpu_stats_clock_speed_mhz{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "{{gpu_name}} {{type}} ({{gpu_uuid}})"
+          "legendFormat": "{{gpu_name}} {{type}}"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "rotmhz",
+          "min": 0,
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
             "lineWidth": 2,
             "fillOpacity": 10
-          },
-          "min": 0
+          }
         }
       }
     },
     {
-      "id": 11,
+      "id": 51,
       "title": "Performance State (P-State)",
-      "type": "timeseries",
+      "type": "state-timeline",
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
-        "y": 45
+        "x": 12,
+        "y": 59
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -478,30 +1169,94 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "none",
-          "decimals": 0,
           "color": {
-            "mode": "palette-classic"
+            "mode": "continuous-BlYlRd"
           },
           "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 10,
-            "lineInterpolation": "stepAfter"
+            "fillOpacity": 90,
+            "lineWidth": 0
           },
-          "min": 0,
-          "max": 12
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "yellow",
+                "value": 4
+              },
+              {
+                "color": "orange",
+                "value": 8
+              },
+              {
+                "color": "red",
+                "value": 12
+              }
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "P0",
+                  "color": "dark-green"
+                },
+                "1": {
+                  "text": "P1",
+                  "color": "green"
+                },
+                "2": {
+                  "text": "P2",
+                  "color": "light-green"
+                },
+                "3": {
+                  "text": "P3",
+                  "color": "semi-dark-yellow"
+                },
+                "4": {
+                  "text": "P4",
+                  "color": "yellow"
+                },
+                "5": {
+                  "text": "P5",
+                  "color": "light-orange"
+                },
+                "8": {
+                  "text": "P8",
+                  "color": "orange"
+                },
+                "12": {
+                  "text": "P12",
+                  "color": "red"
+                }
+              }
+            }
+          ]
         }
+      },
+      "options": {
+        "showValue": "always",
+        "rowHeight": 0.9,
+        "mergeValues": true
       }
     },
     {
-      "id": 12,
-      "title": "PCIe Link",
+      "id": 60,
+      "title": "PCIe Generation",
       "type": "stat",
       "gridPos": {
         "h": 4,
-        "w": 12,
-        "x": 12,
-        "y": 45
+        "w": 4,
+        "x": 0,
+        "y": 67
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -509,7 +1264,7 @@
       "targets": [
         {
           "expr": "gpu_stats_pcie_link_generation{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "Gen: {{gpu_name}}"
+          "legendFormat": "{{gpu_name}}"
         }
       ],
       "fieldConfig": {
@@ -518,7 +1273,7 @@
           "decimals": 0,
           "color": {
             "mode": "fixed",
-            "fixedColor": "text"
+            "fixedColor": "purple"
           }
         }
       },
@@ -528,19 +1283,20 @@
             "lastNotNull"
           ]
         },
-        "textMode": "value_and_name",
-        "colorMode": "none"
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
       }
     },
     {
-      "id": 13,
-      "title": "PCIe Link Width",
+      "id": 61,
+      "title": "PCIe Width",
       "type": "stat",
       "gridPos": {
         "h": 4,
-        "w": 12,
-        "x": 12,
-        "y": 49
+        "w": 4,
+        "x": 4,
+        "y": 67
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
@@ -548,7 +1304,7 @@
       "targets": [
         {
           "expr": "gpu_stats_pcie_link_width{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "x{{gpu_name}}"
+          "legendFormat": "{{gpu_name}}"
         }
       ],
       "fieldConfig": {
@@ -557,7 +1313,7 @@
           "decimals": 0,
           "color": {
             "mode": "fixed",
-            "fixedColor": "text"
+            "fixedColor": "purple"
           }
         }
       },
@@ -567,41 +1323,87 @@
             "lastNotNull"
           ]
         },
-        "textMode": "value_and_name",
-        "colorMode": "none"
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
       }
     },
     {
-      "id": 14,
-      "title": "ECC Errors",
-      "type": "timeseries",
+      "id": 62,
+      "title": "ECC Errors (Corrected)",
+      "type": "stat",
       "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 53
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 67
       },
       "datasource": {
         "uid": "${DS_PROMETHEUS}"
       },
       "targets": [
         {
-          "expr": "gpu_stats_ecc_errors_total{gpu_uuid=~\"$gpu\"}",
-          "legendFormat": "{{gpu_name}} {{type}} ({{gpu_uuid}})"
+          "expr": "gpu_stats_ecc_errors_total{gpu_uuid=~\"$gpu\", type=\"corrected\"}",
+          "legendFormat": "{{gpu_name}}"
         }
       ],
       "fieldConfig": {
         "defaults": {
           "unit": "none",
           "decimals": 0,
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 10
-          },
-          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 63,
+      "title": "ECC Errors (Uncorrected)",
+      "type": "stat",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 67
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_ecc_errors_total{gpu_uuid=~\"$gpu\", type=\"uncorrected\"}",
+          "legendFormat": "{{gpu_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -614,6 +1416,50 @@
                 "value": 1
               }
             ]
+          }
+        }
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value_and_name"
+      }
+    },
+    {
+      "id": 64,
+      "title": "ECC Errors Over Time",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 67
+      },
+      "datasource": {
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "targets": [
+        {
+          "expr": "gpu_stats_ecc_errors_total{gpu_uuid=~\"$gpu\"}",
+          "legendFormat": "{{gpu_name}} {{type}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
           }
         }
       }
