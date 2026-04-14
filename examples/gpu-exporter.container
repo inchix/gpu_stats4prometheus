@@ -13,6 +13,7 @@ NoNewPrivileges=true
 
 [Service]
 Restart=on-failure
+RestartSec=5
 TimeoutStartSec=30
 
 [Install]
